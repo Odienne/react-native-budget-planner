@@ -61,20 +61,23 @@ const styles = StyleSheet.create({
     heading: {
         fontSize: 32,
         color: Colors.white,
-        fontWeight: "bold",
+        fontFamily: 'Rubik-Bold',
         textAlign: 'center'
     },
     subHeading: {
         fontSize: 16,
         color: Colors.white,
         marginTop: 24,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontStyle: 'italic',
+        fontFamily: 'Rubik-Regular',
     },
     button: {
         padding: 16,
         borderRadius: 32,
         marginTop: 100,
-        backgroundColor: Colors.white
+        backgroundColor: Colors.white,
+        fontFamily: "Rubik-Regular"
     },
     buttonText: {
         textAlign: 'center',
