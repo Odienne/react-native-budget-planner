@@ -2,12 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet, ScrollView, RefreshControl} from "react-native";
 import {Link, useRouter} from "expo-router";
 import services from "../../utils/services/services";
-import {client} from "../../utils/KindeConfig";
 import Colors from "../../utils/Colors";
 import Header from "../components/Header";
 import PieChart from "react-native-pie-chart";
 import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
-import {collection, orderBy, limit, onSnapshot, query, where} from "firebase/firestore";
+import {collection, getDoc, limit, onSnapshot, query, where, doc} from "firebase/firestore";
 import {db} from "../../utils/FirebaseConfig";
 import CategoryList from "../components/CategoryList";
 
@@ -23,9 +22,17 @@ function Home() {
     const [loading, setLoading] = useState(false);
 
     const getUserData = async () => {
-        const user = await client.getUserDetails();
-        setUser(user);
-        setEmail(user.email);
+        const logged = await services.getData('login');
+        const docRef = doc(db, "users", logged);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            setUser(docSnap.data());
+            setEmail(logged);
+        } else {
+            setUser(null);
+            setEmail(null);
+        }
     }
 
     const checkUserAuth = async () => {

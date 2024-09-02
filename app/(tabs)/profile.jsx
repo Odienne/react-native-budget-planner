@@ -2,12 +2,11 @@ import React from 'react';
 import {Image, Linking, ScrollView, StyleSheet, Text, View} from "react-native";
 import Header from "../components/Header";
 import {useEffect, useState} from "react";
-import {client} from "../../utils/KindeConfig";
 import services from "../../utils/services/services";
 import {useRouter} from "expo-router";
 import Colors from "../../utils/Colors";
 import {Feather, Ionicons} from "@expo/vector-icons";
-import {collection, limit, onSnapshot, query, where} from "firebase/firestore";
+import {collection, doc, getDoc, limit, onSnapshot, query, where} from "firebase/firestore";
 import {db} from "../../utils/FirebaseConfig";
 import Toast from "react-native-toast-message";
 
@@ -23,9 +22,17 @@ function Profile() {
     const [email, setEmail] = useState(null);
 
     const getUserData = async () => {
-        const user = await client.getUserDetails();
-        setUser(user);
-        setEmail(user.email);
+        const logged = await services.getData('login');
+        const docRef = doc(db, "users", logged);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            setUser(docSnap.data());
+            setEmail(logged);
+        } else {
+            setUser(null);
+            setEmail(null);
+        }
     }
 
     const checkUserAuth = async () => {

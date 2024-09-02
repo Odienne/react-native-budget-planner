@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Image, Text, TouchableOpacity} from "react-native";
-import {client} from "../../utils/KindeConfig";
 import Colors from "../../utils/Colors";
 import {AntDesign, Ionicons} from "@expo/vector-icons"
 import services from "../../utils/services/services";
 import {router} from "expo-router";
+import {auth} from "../../utils/FirebaseConfig";
 
 function Header({user}) {
     const handleLogout = async () => {
-        const loggedOut = await client.logout();
+        const loggedOut = auth.signOut();
         if (loggedOut) {
-            await services.storeData('login', 'false');
+            await services.storeData('login', null);
             router.replace('/login')
         }
     };

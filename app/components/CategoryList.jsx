@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Image, Text, TouchableOpacity} from "react-native";
-import {client} from "../../utils/KindeConfig";
 import Colors from "../../utils/Colors";
-import {AntDesign, Ionicons} from "@expo/vector-icons"
-import services from "../../utils/services/services";
 import {router} from "expo-router";
 
 function CategoryList(props) {
