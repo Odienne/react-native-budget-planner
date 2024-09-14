@@ -1,13 +1,9 @@
 image: node:latest
 stages:
-  - analysis
   - prettier
   - lint
   - test
   - generate-doc
-  - send-doc
-  - rapport
-  - message
 
 cache:
   untracked: true
